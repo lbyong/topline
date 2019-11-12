@@ -10,12 +10,34 @@ const routes = [
     name: 'login',
     component: () => import('@/views/login')
   },
+  {
+    path: '/',
+    name: 'home',
+    redirect:'/welcome', // 给首页子组件配置重定向显示内容
+    component: () => import('@/views/home')
+  },
   // 配置首页路由
   {
     path: '/home',
     name: 'home',
-    component: () => import('@/views/home')
+    component: () => import('@/views/home'),
+    redirect:'/welcome', // 给首页子组件配置重定向显示内容
+      // 给首页配置welcome子路由
+      children:[
+        {
+          path: '/welcome',
+          name: 'welcomre',
+          component: () => import('@/views/welcome')
+        },
+        // {
+        //   path: '/article',
+        //   name: 'article',
+        //   component: () => import('@/views/article')
+        // },
+      ]
   },
+
+
 ]
 
 const router = new VueRouter({
@@ -34,3 +56,4 @@ router.beforeEach((to, from, next) => {
 })
 
 export default router
+

@@ -108,10 +108,12 @@ export default {
                       // 生成的dom极验对象存储给ctaObj保存
                       this.ctaObj = captchaObj
                       this.isActive = false  // 验证窗口弹出后恢复按钮状态
+                      // console.log(captchaObj.verify())
                     })
                     .onSuccess(() => {
                       // 验证成功处理,跳转页面
                       this.loginAct(); // 调用账号验证方法进行页面跳转操作
+                      this.ctaObj.destroy();  // 跳转页面后销毁极验对象
                     })
                     .onError(() => {
                       // 验证失败处理
