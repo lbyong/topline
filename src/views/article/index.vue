@@ -122,8 +122,8 @@ export default {
         this.searchForm.begin_pubdate = newval[0]
         this.searchForm.end_pubdate = newval[1]
       } else {
-        this.searchForm.begin_pubdate = '';
-        this.searchForm.end_pubdate = '';
+        this.searchForm.begin_pubdate = ''
+        this.searchForm.end_pubdate = ''
       };
       // 根据时间范围重新获取文章列表
       this.getArticleList()
@@ -157,14 +157,14 @@ export default {
           type: 'warning'
         }).then(() => {
           this.$messag.success('文章删除成功')
-              this.getArticleList()
-            }).catch(() => {
+          this.getArticleList()
+        }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除'
-          })          
-            })
-          }).catch(errar => {
+          })
+        })
+      }).catch(errar => {
         return this.$message.error('文章删除失败')
       })
     },

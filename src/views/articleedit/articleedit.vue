@@ -76,10 +76,10 @@ export default {
   },
   data () {
     return {
-      materialUrl: '',  // 记录图片的src信息
-      dialogVisible:false,  // 控制对话框显示隐藏
-      xu:'',  // 保存封面图下标
-      imageList:[],  // 图片列表信息
+      materialUrl: '', // 记录图片的src信息
+      dialogVisible: false, // 控制对话框显示隐藏
+      xu: '', // 保存封面图下标
+      imageList: [], // 图片列表信息
       querycdt: {
         collect: false, // 非收藏图片
         page: 1,
@@ -114,7 +114,6 @@ export default {
     // this.getChannelList() // 获取频道列表
     this.getArticleByAid() // 获取指定文章内容
     this.getImageList()
-    
   },
   computed: { // 计算属性
     aid () {
@@ -122,8 +121,8 @@ export default {
       return this.$route.params.id
     },
     // 判断点击的封面类型type值
-    covernum() {
-      if(this.editForm.cover.type > 0) {
+    covernum () {
+      if (this.editForm.cover.type > 0) {
         // this.editForm.cover.images = []
         return this.editForm.cover.type
       }
@@ -132,28 +131,27 @@ export default {
   },
   methods: {
     // 清除选中素材记录
-    clearImage() {
+    clearImage () {
       let lis = document.querySelectorAll('li')
-      lis.forEach(function(ele) {
+      lis.forEach(function (ele) {
         ele.style.border = ''
       })
       this.materialUrl = ''
     },
     // 确定点击事件
-     imageOK() {
+    imageOK () {
       // 判断this.materialUrl是否保存了地址信息
-      if(this.materialUrl) {
+      if (this.materialUrl) {
         this.editForm.cover.images[this.xu] = this.materialUrl
         this.dialogVisible = false
       } else {
         this.$message.error('请选择素材')
       }
-       
-     },
+    },
     // 给素材图片设置高亮事件
-    clkImage(evt) {
+    clkImage (evt) {
       let lis = document.querySelectorAll('li')
-      lis.forEach(function(ele) {
+      lis.forEach(function (ele) {
         ele.style.border = ''
       })
       evt.target.parentNode.style.border = '1px solid #3a8ee6'
@@ -161,8 +159,8 @@ export default {
       this.materialUrl = evt.target.src
     },
     // 给封面设置点击事件
-    showDialog(n) {
-      this.xu = n-1
+    showDialog (n) {
+      this.xu = n - 1
       this.dialogVisible = true
       this.clearImage()
     },
@@ -205,14 +203,12 @@ export default {
         .then(result => {
           if (result.data.message === 'OK') {
             this.imageList = result.data.data.results
-            
-            
           }
         })
         .catch(err => {
           return this.$message.error('获得素材图片列表错误:' + err)
         })
-    },
+    }
     // 获取频道列表
     // getChannelList() {
     //   let pro = this.$http.get("/channels");
@@ -238,7 +234,7 @@ export default {
   .el-form /deep/ .ql-editor {  // 进行深度作用选择器
     height: 300px;
   }
-  
+
 }
 // 文章封面选择框样式
 .uploadbox {

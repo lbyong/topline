@@ -68,47 +68,47 @@ import ClannelCom from '@/components/channel.vue'
 import { quillEditor } from 'vue-quill-editor'
 
 export default {
-  name: "ArticleAdd",
+  name: 'ArticleAdd',
   // 注册富文本组件
-  components:{
+  components: {
     quillEditor,
-    ClannelCom  // 注册频道列表子组件
+    ClannelCom // 注册频道列表子组件
   },
-  data() {
+  data () {
     return {
-      dialogVisible: false,  // 对话框默认隐藏
+      dialogVisible: false, // 对话框默认隐藏
       // channelList:[],  // 频道列表
-      addForm:{  // 发布文章
-        channel_id:'',  // 频道列表id
-        title:'',  // 文章标题
-        content:'',  // 文章内容
-        cover:{  // 文章封面
-          images:[],  // 图片信息
-          type:0  // 封面类型   -1:自动，0-无图，1-1张，3-3张
-        },
+      addForm: { // 发布文章
+        channel_id: '', // 频道列表id
+        title: '', // 文章标题
+        content: '', // 文章内容
+        cover: { // 文章封面
+          images: [], // 图片信息
+          type: 0 // 封面类型   -1:自动，0-无图，1-1张，3-3张
+        }
       },
-      coverSerial:'',  // 记录封面序号
+      coverSerial: '', // 记录封面序号
       materialUrl: '', // 保存图片的src
-      imageList:[],  // 图片列表信息
+      imageList: [], // 图片列表信息
       // 图片信息参数
       querycdt: {
-        collect: false,  // 是否收藏图片
-        page:1,  // 页数
-        per_page: 8,  // 每页图片个数
+        collect: false, // 是否收藏图片
+        page: 1, // 页数
+        per_page: 8 // 每页图片个数
       },
       // 配置表单校验规则
-      addFormRules:{
-        title:[
-          {required: true, message: '请输入文章标题'},  // 标题为空
-          {min: 5, max: 30, message: '标题长度为5-30字符'}  // 标题长度字符限制
+      addFormRules: {
+        title: [
+          { required: true, message: '请输入文章标题' }, // 标题为空
+          { min: 5, max: 30, message: '标题长度为5-30字符' } // 标题长度字符限制
         ],
-        content:[
-          {required: true, message: '请输入文章内容'}  // 内容不能为空
+        content: [
+          { required: true, message: '请输入文章内容' } // 内容不能为空
         ],
-        channel_id:[
-          {required: true, message:'请选择频道'}
+        channel_id: [
+          { required: true, message: '请选择频道' }
         ]
-      } 
+      }
     }
   },
   // created() {
@@ -116,40 +116,40 @@ export default {
   // },
   computed: {
     // 判断点击的封面类型type值
-    covernum() {
-      if(this.addForm.cover.type > 0) {
+    covernum () {
+      if (this.addForm.cover.type > 0) {
         this.addForm.cover.images = []
         return this.addForm.cover.type
       }
       return 0
     }
   },
-  created() {
+  created () {
     this.getImageList()
   },
   methods: {
     // 清除选中图片后的痕迹
-    clearImage() {
-       // 遍历图片数组
+    clearImage () {
+      // 遍历图片数组
       let lis = document.querySelectorAll('.image-box')
       // 排他思想
-      lis.forEach(function(ele) {
+      lis.forEach(function (ele) {
         ele.style.border = ''
-      }) 
-      this.materialUrl = ''  // 清除materialUrl中保存的地址
+      })
+      this.materialUrl = '' // 清除materialUrl中保存的地址
     },
     // 点击确定按钮把对应url地址素材图片展示出来
     imageOK () {
       // 判断materialUrl是否有数据
-      if(this.materialUrl) {
+      if (this.materialUrl) {
         this.addForm.cover.images[this.coverSerial] = this.materialUrl
-        this.dialogVisible = false  // 关闭对话框
+        this.dialogVisible = false // 关闭对话框
       } else {
         this.$message.error('请选择图片素材')
       }
     },
     // 给图片设置选中样式
-    clkImage(evt) {
+    clkImage (evt) {
       this.clearImage()
       // 给当前img的父亲元素li设置样式
       evt.target.parentNode.style.border = '1px solid #3a8ee6'
@@ -157,8 +157,8 @@ export default {
       this.materialUrl = evt.target.src
     },
     // 获取图片
-    getImageList() {
-      let pro = this.$http.get('/user/images', {prarms:this.querycdt})
+    getImageList () {
+      let pro = this.$http.get('/user/images', { prarms: this.querycdt })
       pro
         .then(result => {
           if (result.data.message === 'OK') {
@@ -171,23 +171,23 @@ export default {
         })
     },
     // 记录点击图片缩略图的序号弹出对话框
-    showDialog(n) {
-      this.coverSerial = n-1
+    showDialog (n) {
+      this.coverSerial = n - 1
       this.dialogVisible = true
       this.clearImage()
     },
     // 给频道子组件设置方法
-    selectHandler(val) {
+    selectHandler (val) {
       this.addForm.channel_id = val
     },
-    //发布文章
-    addarticle(flag) {
+    // 发布文章
+    addarticle (flag) {
       // 校验全部表单元素
       this.$refs.addForm.validate(valid => {
-        if(valid) {
+        if (valid) {
           // 发送请求添加数据并跳转页面展示
           // 传入flag参数，true发布成功， flase存入草稿
-          let pro = this.$http.post('/articles', this.addForm,{params:{draft: flag}})
+          let pro = this.$http.post('/articles', this.addForm, { params: { draft: flag } })
           pro.then(result => {
             console.log(this.addForm)
             this.$message.success('文章发布成功')
@@ -197,7 +197,7 @@ export default {
           })
         }
       })
-    },
+    }
     // 获取频道列表
     // getChannelList() {
     //   let pro = this.$http.get("/channels");
@@ -213,8 +213,8 @@ export default {
     //       return this.$message.error("错了");
     //     });
     // },
-  },
-};
+  }
+}
 </script>
 
 <style lang="less" scoped>

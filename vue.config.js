@@ -1,8 +1,9 @@
 module.exports = {
+
   lintOnSave: false,
-  devServer:{
-    open:true,
-    port:8787
+  devServer: {
+    open: true,
+    port: 8787
   },
   // 配置externals外部优化处理
   configureWebpack: config => {
@@ -12,7 +13,7 @@ module.exports = {
       axios: 'axios',
       'vue-router': 'VueRouter',
       echarts: 'echarts',
-      nprogress: 'NProgress',
+      nprogress: 'NProgress'
     }
   }
 }
